@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Materi</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; /* Menyesuaikan ukuran gambar agar selalu menutupi layar */
+  background-attachment: fixed; /* Opsional: untuk efek tetap saat scroll */
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+    .flipbook-container {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.55);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      overflow-y: auto;
+      transition: all 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 80vh;
+    }
+
+    .flipbook-container.cover {
+      padding: 5px 10px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .cover {
+  justify-content: center;
+  text-align: center;
+}
+
+.cover h1 {
+  margin-top: 190px;
+}
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #333;
+      transition: all 0.3s ease-in-out;
+    }
+
+    p {
+      text-align: justify;
+      line-height: 1.6;
+      transition: all 0.3s ease-in-out;
+      margin-bottom: 20px;
+    }
+
+    #pTop, #pBottom {
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    .navigation {
+      margin-top: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-button {
+      text-decoration: none;
+      color: white;
+      background: #007BFF;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: inline-block;
+      transition: background 0.3s;
+      margin: 0 10px;
+    }
+
+    .nav-button:hover {
+      background: #0056b3;
+    }
+
+    .disabled {
+      background: #ccc;
+      pointer-events: none;
+    }
+
+    #homeButtonContainer {
+      margin-top: 10px;
+    }
+
+    img.page-image {
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .fade-in {
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .flipbook-container {
+        padding: 20px;
+      }
+
+      .flipbook-container.cover {
+        padding: 10px 15px;
+      }
+
+      .nav-button {
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      img.page-image {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flipbook-container" id="flipbook">
+    <h1>BENTUK KERAGAMAN MASYARAKAT</h1>
+    <p id="pTop" style="display:none;"></p>
+    <img src="" alt="Gambar Materi" class="page-image" style="display:none;">
+    <p id="pBottom" style="display:none;"></p>
+
+    <div class="navigation">
+      <a href="#" class="nav-button disabled" id="prevBtn" onclick="navigate(-1)">Sebelumnya</a>
+      <a href="#" class="nav-button" id="nextBtn" onclick="navigate(1)">Selanjutnya</a>
+    </div>
+
+    <div id="homeButtonContainer">
+      <a href="home.html" class="nav-button">Kembali ke Beranda</a>
+    </div>
+  </div>
+
+  <script>
+    let pageIndex = 1;
+    const pages = [
+      {
+        title: "BENTUK KERAGAMAN MASYARAKAT",
+        background: "materi1.jpg"
+      },
+      {
+        title: "Kemajemukan",
+        content: "Masyarakat Indonesia dapat dikatakan sebagai masyarakat yang bersifat plural, yang berarti jamak. Pluralitas masyarakat Indonesia berarti sama dengan kemajemukan masyarakat Indonesia. Selain itu, terdapat istilah multikultural yang berasal dari kata multi yang berarti banyak (lebih dari dua) dan culture yang berarti kebudayaan. Masyarakat multikultural adalah masyarakat yang memiliki lebih dari dua kebudayaan. Masyarakat multikultural terdiri dari berbagai budaya yang menjadi sumber nilai kehidupan masyarakat dan keragaman budaya berfungsi sebagai pertahanan dasar identitas diri serta integrasi sosial masyarakatnya. Meskipun terdapat banyak keragaman budaya, Indonesia tetap berpegang teguh pada semboyan nasional “Bhineka Tunggal Ika” sebagai pemersatu kehidupan berbangsa dan bernegara.",
+        image: "halaman1.jpg",
+        background: "materi1.jpg"
+      },
+      {
+        title: "Perbedaan Agama",
+        content: "Masyarakat Indonesia dikenal sebagai negara yang majemuk dalam hal kepercayaan dan keyakinan. Secara resmi, pemerintah Indonesia mengakui enam agama, yaitu:\na. Islam\nb. Kristen\nc. Katolik\nd. Hindu\ne. Buddha\nf. Konghucu\nSelain itu, masih banyak kepercayaan lokal dan agama-agama tradisional yang dianut oleh berbagai komunitas adat, seperti Kejawen di Jawa, Parmalim di Batak, Aluk Todolo di Sulawesi, dan lainnya.\nSetiap orang berhak memilih kepercayaan dan keyakinan masing-masing. Walau berbeda agama, kita harus saling menghormati, menghargai, dan hidup rukun satu sama lain. Perbedaan agama bukan alasan untuk terpecah, justru menjadi kekayaan yang memperkuat persatuan.",
+        image: "halaman2.jpg",
+        background: "4.png"
+      },
+      {
+        title: "Perbedaan Budaya",
+        content: "Seorang ahli budaya Indonesia bernama Soekmono mendefinisikan budaya adalah hasil kerja atau usaha manusia yang berupa benda maupun hasil buah pemikiran manusia dimasa hidupnya. Budaya merupakan salah satu bentuk hasil manusia yang membedakan manusia dengan makhluk lainnya. Manusia selalu menghasilkan budaya karena manusia dikaruniai akal fikir yang dapat digunakan untuk memperbaiki taraf hidup manusia. Menurut JJ. Hoenigman, Sosiolog, terdapat tiga wujud budaya yaitu gagasan, tindakan, dan karya. \n\na. Gagasan (Wujud Ideal) \nWujud ideal kebudayaan merupakan kebudayaan yang berbentuk kumpulan ide-ide, gagasan, nilai-nilai, norma-norma, peraturan, dan sebagainya yang sifatnya abstrak atau tidak nyata; tidak dapat diraba atau disentuh. Contohnya adalah buku, karangan, dan sebagainya. \nb. Aktivitas (Tindakan) \nAktivitas adalah wujud kebudayaan sebagai suatu tindakan berpola dari manusia dalam masyarakat itu juga disebut dengan sistem sosial. Sifatnya konkrey, terjadi dalam kehidupan sehari-hari, dan dapat diamati, dan didokumentasikan. \nc. Artefak (Karya) \nArtefak adalah wujud kebudayaan fisik yang berupa hasil dari aktivitas, perbuatan, dan karya semua manusia dalam masyarakat berupa benda-benda atau hal-hal yang dapat diraba, dilihat, dan didokumentasikan. Sifatnya paling nyata di antara ketiga wujud kebudayaan.",
+        background: "5.png"
+      },
+      {
+        title: "Perbedaan Budaya",
+        content: "", 
+        image: "halaman3.png",
+        background: "7.png"
+      },
+      {
+        title: "Perbedaan Budaya",
+        content: "",
+        image: "halaman4.png",
+        background: "7.png"
+      },
+      {
+        title: "Perbedaan Budaya",
+        content: "",
+        image: "halaman5.png",
+        background: "7.png"
+      },
+      {
+        title: "Perbedaan Budaya",
+        content: "",
+        image: "halaman6.png",
+        background: "7.png"
+      },
+      {
+        title: "Perbedaan Budaya",
+        content: "",
+        image: "halaman7.png",
+        background: "7.png"
+      },
+      {
+        title: "Perbedaan Suku Bangsa",
+        content: "",
+        image: "halaman8.jpg",
+        background: "8.png"
+      },
+      {
+        title: "Perbedaan Pekerjaan",
+        content: "Pekerjaan merupakan bagian dari aktivitas ekonomi yang dilakukan masyarakat demi mencukupi kebutuhan hidup. Saat ini, kita bisa menjumpai beragam jenis pekerjaan baik di sektor formal maupun nonformal. Pekerjaan dalam sektor formal mencakup aktivitas yang dilakukan oleh instansi resmi, baik milik pemerintah maupun swasta. Contohnya seperti pegawai bank, guru, karyawan perusahaan, hingga aparatur sipil negara. Berbeda halnya dengan sektor nonformal, seperti petani, pemilik bengkel, pedagang pasar, atau pelaku usaha mandiri lainnya, yang memiliki kebebasan dalam mengatur pekerjaan mereka sendiri. Perbedaan jenis pekerjaan mencerminkan beragamnya kebutuhan masyarakat. Kehadiran berbagai profesi seperti guru, tentara, pedagang buah, dan tukang batu menggambarkan bahwa kehidupan manusia saling berkaitan dan saling membutuhkan. Semua pekerjaan memiliki nilai mulia selama memberikan manfaat dan tidak merugikan orang lain. Profesi seperti guru, polisi, dokter, petani, maupun tukang pijat sama-sama berharga. Tidak ada satu pun yang lebih tinggi atau rendah dari yang lain karena semuanya saling melengkapi. Tanpa guru, tidak akan ada dokter atau polisi. Tanpa petani, profesi lainnya pun akan kesulitan memenuhi kebutuhan dasar mereka.",
+        background: "9.png"
+      },
+      {
+        title: "Manfaat Keberagaman",
+        content: "1) Manfaat Sosial \n- Peningkatan Toleransi: Keberagaman mendorong masyarakat untuk saling menghargai dan memahami perbedaan, sehingga meningkatkan toleransi. \n- Kekayaan Budaya: Indonesia memiliki kekayaan budaya yang luar biasa, dengan berbagai tradisi, bahasa, dan adat istiadat yang unik. \n- Pertukaran Pengetahuan: Keberagaman memungkinkan pertukaran pengetahuan dan pengalaman antara berbagai kelompok masyarakat.",
+        background: "10.png"
+      },
+      {
+        title: "Manfaat Keberagaman",
+        content: "2) Manfaat Ekonomi \n- Peningkatan Kreativitas: Keberagaman dapat memicu kreativitas dan inovasi dalam berbagai bidang, seperti seni, musik, dan kuliner. \n- Peningkatan Pariwisata: Keberagaman budaya dan alam Indonesia dapat menarik wisatawan, sehingga meningkatkan pendapatan ekonomi. \n- Pengembangan Industri Kreatif: Keberagaman dapat menjadi sumber inspirasi bagi industri kreatif, seperti fashion, desain, dan seni.",
+        background: "11.png"
+      },
+      {
+        title: "Manfaat Keberagaman",
+        content: "3) Manfaat Politik \n- Peningkatan Stabilitas: Keberagaman dapat meningkatkan stabilitas politik jika dikelola dengan baik, karena masyarakat merasa dihargai dan memiliki kesempatan yang sama. \n- Peningkatan Partisipasi: Keberagaman dapat meningkatkan partisipasi masyarakat dalam proses politik, karena berbagai kelompok masyarakat merasa memiliki suara. \n- Pengembangan Demokrasi: Keberagaman dapat memperkuat demokrasi, karena masyarakat belajar untuk menghargai perbedaan dan bekerja sama untuk mencapai tujuan bersama.",
+        background: "12.png"
+      },
+    ];
+
+    function navigate(direction) {
+      pageIndex += direction;
+      if (pageIndex < 1) pageIndex = pages.length;
+      if (pageIndex > pages.length) pageIndex = 1;
+      updatePage();
+    }
+
+    function updatePage() {
+  const page = pages[pageIndex - 1];
+  const container = document.getElementById("flipbook");
+      container.classList.remove("fade-in"); // Reset animasi
+      void container.offsetWidth; // Paksa browser untuk *reflow* supaya animasi bisa diputar ulang
+      container.classList.add("fade-in"); // Tambahkan animasi
+  const h1 = container.querySelector("h1");
+  const pTop = document.getElementById("pTop");
+  const pBottom = document.getElementById("pBottom");
+  const img = container.querySelector(".page-image");
+
+  h1.textContent = page.title;
+
+  if (pageIndex === 5 || pageIndex === 6 || pageIndex === 7 || pageIndex === 8 || pageIndex === 9 || pageIndex === 10) {
+    let contentAtas = "";
+    let contentBawah = "";
+
+    if (pageIndex === 5) {
+      contentAtas = "Indonesia merupakan negara yang sangat kaya akan keberagaman budaya yang tercermin dari pluralitas masyarakatnya. Pluralitas ini berarti adanya kemajemukan suku, bahasa, adat istiadat, dan kebiasaan yang berbeda-beda di setiap daerah. Perbedaan ini muncul karena berbagai faktor yang saling berinteraksi. antara lain: \na. Faktor geografi negara kepulauan";
+      contentBawah = "Indonesia terdiri dari ribuan pulau yang terpisah-pisah, sehingga interaksi antar masyarakat di pulau berbeda menjadi terbatas. Hal ini menyebabkan berkembangnya budaya yang berbeda sesuai dengan lingkungan dan kondisi masyarakat masing-masing pulau.";
+    }
+
+    if (pageIndex === 6) {
+      contentAtas = "b. Kondisi alam";
+      contentBawah = "Perbedaan kondisi alam seperti dataran tinggi, pesisir, dan pegunungan memengaruhi mata pencaharian dan gaya hidup masyarakat. Misalnya, masyarakat Sunda yang tinggal di daerah pertanian memiliki budaya agraris, sementara suku Bajau yang hidup di laut memiliki budaya maritim.";
+    }
+
+    if (pageIndex === 7) {
+      contentAtas = "c. Adat istiadat dan tradisi";
+      contentBawah = "Setiap suku dan daerah memiliki adat istiadat yang unik, mulai dari upacara adat, seni tradisional seperti tari, ukir, batik, hingga sistem nilai sosial yang diwariskan turun-temurun. Adat istiadat ini menjadi perekat sosial sekaligus pembeda budaya antar daerah.";
+    }
+
+    if (pageIndex === 8) {
+      contentAtas = "d. Keberagaman etnik dan Bahasa";
+      contentBawah = "Indonesia memiliki lebih dari 300 suku bangsa dan sekitar 700 bahasa daerah. Keberagaman ini menjadi cerminan kekayaan etnik dan linguistik yang sangat beragam, yang memperkuat identitas budaya lokal sekaligus menambah warna dalam budaya nasional.";
+    }
+
+    if (pageIndex === 9) {
+      contentAtas = "e. Pengaruh Modernisasi dan Globalisasi";
+      contentBawah = "Modernisasi membawa tantangan sekaligus peluang bagi keberagaman budaya Indonesia. Sementara pertukaran budaya semakin intens, ada risiko terkikisnya budaya lokal. Oleh karena itu, pelestarian budaya menjadi hal yang penting untuk menjaga kekayaan budaya Nusantara.";
+    }
+
+    if (pageIndex === 10) {
+      contentAtas = "Menurut data sensus dari BPS pada tahun 2010, Indonesia memiliki 1.340 suku bangsa. Sebanyak 41% dari total populasi merupakan suku Jawa, yang kemudian disusul suku Sunda, Melayu, dan Madura sebagai suku terbesar di Indonesia. Jutaan jiwa telah banyak bermigrasi ke luar negeri, maka tidak heran apabila di luar negeri banyak sekali ditemukan orang Indonesia.";
+      contentBawah = "Berbicara mengenai perbedaan suku bangsa tentunya dalam setiap suku memiliki ciri, pakaian, bahasa, hingga adat istiadat yang berbeda-beda. Namun hal ini harus disikapi sesuai dengan semboyan bangsa kita yaitu “Bhineka Tunggal Ika” yang artinya berbeda-beda tetapi tetap satu. Agar tetap satu itulah kita semua harus bisa saling menghargai dan toleransi dengan segala perbedaan yang ada, perbedaan itu harus dianggap sebagai kekayaan yang dimiliki bangsa Indonesia yang belum tentu dimiliki oleh bangsa lain. Hal inilah yang justru menyebabkan kita menjadi unik dimata bangsa lain.";
+    }
+
+    pTop.innerText = contentAtas;
+    pTop.style.display = "block";
+
+    pBottom.innerText = contentBawah;
+    pBottom.style.display = "block";
+
+    if (page.image) {
+      img.src = page.image;
+      img.style.display = "block";
+    } else {
+      img.style.display = "none";
+    }
+  } else {
+    // Untuk halaman biasa
+    if (page.content) {
+      pTop.innerText = page.content;
+      pTop.style.display = "block";
+    } else {
+      pTop.style.display = "none";
+    }
+
+    // pBottom disembunyikan
+    pBottom.style.display = "none";
+
+    if (page.image) {
+      img.src = page.image;
+      img.style.display = "block";
+    } else {
+      img.style.display = "none";
+    }
+  }
+
+  document.body.style.backgroundImage = page.background
+  ? `url('${page.background}')`
+  : page.image
+  ? `url('${page.image}')`
+  : "none";
+
+  container.classList.toggle("cover", pageIndex === 1);
+
+  document.getElementById("prevBtn").classList.remove("disabled");
+  document.getElementById("nextBtn").classList.remove("disabled");
+  if (pageIndex === 1) {
+  document.getElementById("prevBtn").classList.add("disabled");
+}
+if (pageIndex === pages.length) {
+  document.getElementById("nextBtn").classList.add("disabled");
+}
+
+// Tampilkan tombol 'Kembali ke Beranda' di semua halaman
+document.getElementById("homeButtonContainer").style.display = "block";
+
+}
+
+    updatePage();
+  </script>
+</body>
+</html>

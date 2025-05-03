@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 1</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+
+    /* Background settings */
+    background-image: url('16.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed; /* Optional for parallax effect */
+}
+
+
+        .content {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow-y: auto;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            text-align: justify;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .back {
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: #007BFF;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .back:hover {
+            background: #0056b3;
+        }
+
+        .sound-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .sound-control:hover {
+            color: #28a745;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .back {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .sound-control {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-audio" autoplay loop>
+        <source src="Glosarium.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Tombol Icon Suara -->
+    <button class="sound-control" id="soundBtn" onclick="toggleSound()">🔊</button>
+
+    <div class="content">
+        <h1>Glosarium</h1>
+        <p><b>Adat Istiadat</b>: Himpunan kaidah-kaidah sosial yang sejak lama ada dan telah menjadi kebiasaan (tradisi) dalam masyarakat.</p>
+        <p><b>Multikultural</b>: Suatu masyarakat yang terdiri dari beberapa macam komunitas budaya dengan kelebihannya, dengan sedikit perbedaan konsepsi mengenai dunia, suatu sistem arti, nilai, bentuk organisasi sosial, sejarah, adat serta kebiasaan.</p>
+        <p><b>Batavia</b>: Nama yang diberikan oleh orang Belanda pada koloni dagang sekarang tumbuh menjadi Jakarta, ibu kota Indonesia.</p>
+        <p><b>Benua</b>: Hamparan daratan yang sangat luas yang berada di per mukaan bumi.</p>
+        <p><b>Budaya</b>: Suatu cara hidup yang berkembang dan dimiliki ber sama oleh sebuah kelompok orang dan diwariskan dari generasi ke generasi.</p>
+        <p><b>Cuaca</b>: Keadaan udara pada saat tertentu dan di wilayah tertentu yang relatif sempit dan pada jangka waktu yan singkat.</p>
+        <p><b>Culture Stelsel</b>: Tanam paksa yang diterapkan Gubernur Jenderal Hinda Belanda Van Den Bosch tahun 1830, dimana rakyat diwajibkan menanam tanaman ekspor yang laku di Eropa guna menutupi hutang Belanda.</p>
+        <p><b>Devisa</b>: Alat pembayaran yang digunakan dan dapat diterima secara internasional.</p>
+        <p><b>Dinamika penduduk</b>: Perubahan jumlah penduduk pada suatu wilayah yang disebabkan oleh tiga faktor yaitu, kelahiran (natalitas), kematan (mortalitas), dan perpindahan (migrasi).</p>
+        <p><b>Diplomasi</b>: Urusan kepentingan sebuah negara dengan perantaraan wakil-wakilnya di negara lain.</p>
+        <p><b>Eksogen</b>: Tenaga yang berasal dari luar bumi, artinya tenaga luar berhubungan dengan tenaga yang berasal dari atas permukaan bumi.</p>
+        <p><b>Ekspor</b>: Kegiatan menjual barang ke luar negeri.</p>
+        <p><b>Endogen</b>: Tenaga yang berasal dari dalam perut bumi sehingga mengakibatkan pergerakan kulit bumi.</p>
+        <p><b>Globalisasi</b>: Terbentuknya sistem organisasi dan komunikasi antar masyarakat di seluruh dunia untuk mengikuti sistem dan kaidah yang sama secara cepat terutama di bidang iptek.</p>
+        <p><b>Gunung api</b>: Gunung yang terbentuk akibat material hasil letusan atau gunung yang terbentuk dari erupsi magma.</p>
+        <p><b>Iklim</b>: Rerata keadaan udara atau cuaca yang terjadi pada rentang wilayah yang luas serta rentang waktu yang lama. Wilayah tersebut bisa satu benua atau negara dengan waktu, misalnya 10 tahun atau 20 tahun.</p>
+        <a href="home.html" class="back">Kembali</a>
+    </div>
+
+    <script>
+        const audio = document.getElementById("bg-audio");
+        const soundBtn = document.getElementById("soundBtn");
+
+        function toggleSound() {
+            if (audio.paused) {
+                audio.play();
+                soundBtn.textContent = "🔊";
+            } else {
+                audio.pause();
+                soundBtn.textContent = "🔇";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('games.jpg') no-repeat center center/cover;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow-y: auto;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        p {
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        .back {
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: #007BFF;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .back:hover {
+            background: #0056b3;
+        }
+
+        .sound-control {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .sound-control:hover {
+            color: #28a745;
+        }
+
+        @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        /* Media Query untuk layar kecil (HP) */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .back {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-audio" autoplay loop>
+        <source src="studikasus2.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Tombol Icon Suara -->
+    <button class="sound-control" id="soundBtn" onclick="toggleSound()">🔊</button>
+
+    <div class="content">
+        <h1>Perbedaan Budaya</h1>
+        <p>Ketika perbedaan sosial budaya menyebabkan konflik atau ketegangan di lingkungan (sekolah, tempat tinggal, dan lingkungan masyarakat), langkah apa yang dapat diambil oleh pihak terkait untuk menciptakan suasana yang lebih harmonis dan saling menghargai antar individu dengan latar belakang budaya yang berbeda? (6 poin)</p>
+        <a href="materi2.html" class="back">Kembali</a>
+    </div>
+
+    <script>
+        const audio = document.getElementById("bg-audio");
+        const soundBtn = document.getElementById("soundBtn");
+
+        function toggleSound() {
+            if (audio.paused) {
+                audio.play();
+                soundBtn.textContent = "🔊";
+            } else {
+                audio.pause();
+                soundBtn.textContent = "🔇";
+            }
+        }
+    </script>
+</body>
+</html>

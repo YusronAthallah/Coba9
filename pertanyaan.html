@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pertanyaan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('games.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease-in-out;
+      text-align: center;
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    #soal-teks {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    .option {
+      background-color: #f2f2f2;
+      padding: 12px 20px;
+      margin: 10px auto;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 500px;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+      font-weight: 500;
+    }
+
+    .option:hover {
+      background-color: #e0e0e0;
+      transform: scale(1.02);
+    }
+
+    .correct {
+      background-color: #d4edda !important;
+      border-color: #28a745;
+      color: #155724;
+    }
+
+    .wrong {
+      background-color: #f8d7da !important;
+      border-color: #dc3545;
+      color: #721c24;
+    }
+
+    #next-btn {
+      display: none;
+      margin-top: 25px;
+      padding: 12px 30px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #next-btn:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 20px 15px;
+      }
+
+      .option {
+        font-size: 16px;
+      }
+
+      #soal-teks {
+        font-size: 16px;
+      }
+
+      #next-btn {
+        width: 100%;
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="toggle-sound" style="
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  border: none;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 999;
+">🔊</button>
+
+
+  <div class="card">
+    <h2 id="judul-paket"></h2>
+    <p id="soal-teks"></p>
+    <div id="opsi-jawaban"></div>
+    <button id="next-btn" onclick="nextSoal()">Lanjut</button>
+  </div>
+
+  <audio id="sound-correct" src="correct-156911.mp3" preload="auto"></audio>
+  <audio id="sound-wrong" src="buzzerwav-14908.mp3" preload="auto"></audio>
+  <audio id="bg-music" src="Games.mp3" preload="auto" loop autoplay></audio>
+
+
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const paket = urlParams.get('paket');
+
+    const semuaSoal = {
+      1: [
+        {
+          soal: "Apa arti dari istilah “plural” dalam konteks masyarakat Indonesia?",
+          pilihan: ["Beragam budaya", "Satu budaya", "Tanpa budaya", "Budaya asing"],
+          benar: 0
+        },
+        {
+          soal: "Semboyan “Bhineka Tunggal Ika” memiliki arti?",
+          pilihan: ["Satu budaya untuk semua", "Berbeda-beda tetapi tetap satu", "Bersatu dalam budaya", "Semua budaya sama"],
+          benar: 1
+        },
+        {
+          soal: "Kata “multikultural” terdiri dari kata?",
+          pilihan: ["Banyak dan warna", "Budaya dan global", "Multi dan culture", "Bangsa dan negara"],
+          benar: 2
+        },
+        {
+          soal: "Keberagaman budaya Indonesia mencerminkan?",
+          pilihan: ["Kelemahan nasional", "Tantangan modernisasi", "Identitas tunggal", "Identitas dan integrasi sosial"],
+          benar: 3
+        },
+        {
+          soal: "Salah satu fungsi keragaman budaya adalah sebagai?",
+          pilihan: ["Alat pemecah bangsa", "Sumber konflik", "Pertahanan identitas dan integrasi sosial", "Media hiburan semata"],
+          benar: 2
+        },
+        {
+          soal: "Apa dampak dari modernisasi terhadap budaya lokal?",
+          pilihan: ["Berisiko mengikis budaya lokal", "Memperkuat adat", "Menambah keaslian budaya", "Menghapus budaya asing"],
+          benar: 0
+        },
+        {
+          soal: "Masyarakat multikultural memiliki ciri khas berupa?",
+          pilihan: ["Satu sistem sosial", "Banyak agama saja", "Banyak budaya dan nilai", "Tidak memiliki nilai"],
+          benar: 2
+        },
+        {
+          soal: "Kepercayaan seperti Kejawen dan Aluk Todolo termasuk dalam?",
+          pilihan: ["Agama internasional", "Agama resmi", "Agama lokal/tradisional", "Atheisme"],
+          benar: 2
+        },{
+          soal: "Prinsip utama dalam hidup berdampingan antar agama di Indonesia adalah?",
+          pilihan: ["Dominasi agama mayoritas", "Sekularisme mutlak", "Netralitas total", "Toleransi dan saling menghormati"],
+          benar: 3
+        },
+        {
+          soal: "Budaya menurut Soekmono adalah?",
+          pilihan: ["Hasil pemikiran manusia yang tidak nyata", "Bentuk komunikasi modern", "Hasil kerja atau usaha manusia", "Adat istiadat yang terbatas"],
+          benar: 2
+        },
+      ],
+      2: [
+        {
+          soal: "Apa saja tiga wujud budaya menurut JJ. Hoenigman?",
+          pilihan: ["Bahasa, seni, adat", "Gagasan, tindakan, artefak", "Agama, pakaian, bahasa", "Sosial, ekonomi, politik"],
+          benar: 1
+        },
+        {
+          soal: "Contoh wujud budaya ideal adalah?",
+          pilihan: ["Rumah adat", "Tarian tradisional", "Buku atau tulisan", "Alat pertanian"],
+          benar: 2
+        },
+        {
+          soal: "Aktivitas budaya dapat dilihat dalam bentuk",
+          pilihan: ["Sistem sosial", "Gagasan tertulis", "Nilai Moral", "Warisan sejarah"],
+          benar: 0
+        },
+        {
+          soal: "Artefak budaya adalah?",
+          pilihan: ["Ide dan nilai", "Tindakan berpola", "Benda nyata hasil budaya", "Perilaku sosial"],
+          benar: 2
+        },
+        {
+          soal: "Apa dampak kondisi geografis Indonesia terhadap budaya?",
+          pilihan: ["Membuat budaya sama", "Membatasi interaksi budaya", "Menyamaratakan budaya", "Menghilangkan budaya"],
+          benar: 1
+        },
+        {
+          soal: "Masyarakat Sunda dan Suku Bajau memiliki budaya berbeda karena?",
+          pilihan: ["Perbedaan usia", "Perbedaan lokasi geografis", "Perbedaan bahasa nasional", "Pengaruh modernisasi"],
+          benar: 1
+        },
+        {
+          soal: "Contoh adat istiadat yang menjadi perekat sosial adalah?",
+          pilihan: ["Konflik sosial", "Urbanisasi", "Perdebatan adat", "Upacara adat"],
+          benar: 3
+        },
+        {
+          soal: "Berapa jumlah suku bangsa di Indonesia menurut BPS 2010?",
+          pilihan: ["100", "534", "1.340", "2.500"],
+          benar: 2
+        },
+        {
+          soal: "Mayoritas suku bangsa di Indonesia adalah?",
+          pilihan: ["Sunda", "Madura", "Jawa", "Melayu"],
+          benar: 2
+        },
+        {
+          soal: "Keberagaman suku dan budaya di Indonesia harus disikapi dengan?",
+          pilihan: ["Fanatisme", "Toleransi dan penghargaan", "Diskriminasi", "Nasionalisme sempit"],
+          benar: 1
+        }
+      ],
+      3: [
+        {
+          soal: "Pekerjaan di sektor formal biasanya dilakukan di?",
+          pilihan: ["Luar negeri", "Lembaga adat", "Pasar tradisional", "Instansi resmi"],
+          benar: 3
+        },
+        {
+          soal: "Contoh pekerjaan sektor nonformal adalah?",
+          pilihan: ["Polisi", "Pegawai bank", "Petani", "Dosen"],
+          benar: 2
+        },
+        {
+          soal: "Mengapa tidak ada pekerjaan yang lebih tinggi dari yang lain?",
+          pilihan: ["Semua profesi bersaing", "Semua pekerjaan saling melengkapi", "Karena semua rendah", "Karena pekerjaan tidak penting"],
+          benar: 1
+        },
+        {
+          soal: "Manfaat sosial dari keberagaman budaya adalah?",
+          pilihan: ["Peningkatan toleransi", "Pemaksaan budaya", "Persaingan budaya", "Eliminasi perbedaan"],
+          benar: 0
+        },
+        {
+          soal: "Keberagaman budaya dapat menjadi potensi dalam bidang ekonomi melalui?",
+          pilihan: ["Pengurangan tenaga kerja", "Peningkatan kreativitas dan pariwisata", "Penutupan akses budaya", "Pemusnahan budaya"],
+          benar: 1
+        },
+        {
+          soal: "Keberagaman yang dikelola baik dapat meningkatkan?",
+          pilihan: ["Ketegangan politik", "Penguasaan etnik", "Konflik agama", "Demokrasi dan stabilitas"],
+          benar: 3
+        },
+        {
+          soal: "Dalam konteks globalisasi, bagaimana seharusnya Indonesia memanfaatkan keberagaman budayanya?",
+          pilihan: ["Dengan menyatukan budaya-budaya lokal menjadi satu budaya nasional", "Dengan menghapus budaya yang minoritas", "Dengan mempromosikannya sebagai daya tarik pariwisata dan diplomasi budaya", "Dengan menutup diri dari pengaruh budaya asing"],
+          benar: 2
+        },
+        {
+          soal: "Bagaimana peran pendidikan dalam memperkuat semangat Bhinneka Tunggal Ika di kalangan generasi muda?",
+          pilihan: ["Dengan memperkenalkan budaya global sejak dini", "Dengan menekankan persamaan daripada perbedaan", "Dengan mengajarkan pentingnya toleransi, keberagaman, dan dialog antar budaya", "Dengan menyeleksi budaya mana yang pantas untuk diterima"],
+          benar: 2
+        },
+        {
+          soal: "Mengapa semboyan “Bhinneka Tunggal Ika” sangat relevan dalam konteks keberagaman suku bangsa di Indonesia?",
+          pilihan: ["Karena menekankan pentingnya toleransi dalam keberagaman", "Karena mendorong keseragaman budaya dan bahasa", "Karena menyarukan pembaruan budaya", "Karena menyatukan suku-suku dalam satu identitas budaya dominan"],
+          benar: 0
+        },
+        {
+          soal: "Perang suku di NTT antara Kwaelaga dan Lamatokan disebabkan oleh?",
+          pilihan: ["Pembangunan pabrik", "Perebutan kekuasaan", "Perbedaan Adat", "Sengketa tanah kebun"],
+          benar: 3
+        }
+      ],
+      4: [
+        {
+          soal: "Bagaimana cara sederhana yang bisa dilakukan masyarakat untuk menghargai perbedaan budaya di sekitar mereka?",
+          pilihan: ["Menghormati kebiasaan dan adat istiadat yang berbeda", "Menghindari interaksi dengan suku lain", "Menolak mengikuti acara budaya selain lingkungan sendiri", "Menyebarkan budaya sendiri kepada semua orang"],
+          benar: 0
+        },
+        {
+          soal: "Salah satu indikator bahwa suatu bangsa berhasil dalam menyatukan keberagaman adalah?",
+          pilihan: ["Adanya keseragaman dalam berbahasa", "Tidak adanya kebudayaan lokal yang dominan", "Adanya harmoni dan saling pengertian antar suku", "Adanya satu budaya nasional yang menggantikan budaya daerah"],
+          benar: 2
+        },
+        {
+          soal: "Mengapa perbedaan agama dianggap sebagai kekayaan bangsa Indonesia?",
+          pilihan: ["Karena bisa menimbulkan konflik yang memperkuat identitas", "Karena menunjukkan adanya mayoritas yang dominan", "Karena menjadi dasar untuk diskriminasi", "Karena memperkuat persatuan dalam keberagaman"],
+          benar: 3
+        },
+        {
+          soal: "Berapa jumlah agama yang secara resmi diakui oleh pemerintah Indonesia??",
+          pilihan: ["Empat", "Lima", "Enam", "Tujuh"],
+          benar: 2
+        },
+        {
+          soal: "Sikap yang harus ditunjukkan dalam menghadapi perbedaan agama di Indonesia adalah?",
+          pilihan: ["Memaksakan keyakinan sendiri", "Menghindari interaksi antar umat beragama", "Saling menghormati dan hidup rukun", "Menyamakan semua ajaran agama"],
+          benar: 2
+        },
+        {
+          soal: "Apa prinsip dasar dalam menjaga kerukunan antar umat beragama di Indonesia?",
+          pilihan: ["Persaingan antar agama", "Toleransi dan saling menghormati", "Penyatuan semua ajaran agama", "Penghapusam agama lokal"],
+          benar: 1
+        },
+        {
+          soal: "Berikut ini yang bukan termasuk agama resmi yang diakui oleh pemerintah Indonesia adalah?",
+          pilihan: ["Islam", "Katolik", "Kejawen", "Hindu"],
+          benar: 2
+        },
+        {
+          soal: "Contoh penerapan toleransi antar umat beragama di lingkungan sekolah adalah?",
+          pilihan: ["Menghindari teman yang berbeda agama", "Menyuruh teman mengikuti ibadah agama mayoritas", "Menghargai teman yang tidak ikut dalam kegiatan keagamaan tertentu", "Menyeragamkan kegiatan ibadah di sekolah"],
+          benar: 2
+        },
+        {
+          soal: "Sebagai seorang pelajar sikap yang perlu dilakukan ketika negaranya memiliki budaya yang sangat beragam kecuali",
+          pilihan: ["Terlalu membanggakan budaya yang ada di daerahnya", "Menghargai setiap budaya yang ada di setiap daerah", "Berupaya untuk menjaga dan melestarikan budaya yang ada", "Mengenalkan budaya daerahnya kepada daerah yang lain"],
+          benar: 0
+        },
+        {
+          soal: "Angklung merupakan salah satu kebudayaan yang diakui oleh UNESCO yang berasal dari daerah?",
+          pilihan: ["Jawa Tengah", "Jawa Timur", "Jawa Barat", "D.I.Yogyakarta"],
+          benar: 2
+        },
+        {
+          soal: "Suntiang merupakan salah satu aksesoris kepala yang digunakan untuk melengkapi pakaian adat dari suku?",
+          pilihan: ["Sunda", "Minang", "Dayak", "Jawa"],
+          benar: 1
+        },
+        {
+          soal: "Adanya budaya yang beragam apabila tidak disikapi dengan bijak maka akan menimbulkan dampak negatif, seperti",
+          pilihan: ["Hidup berdampingan dengan rukun dan tentram", "Semakin meningkatkan persatuan dan kesatuan bangsa", "Munculnya rasa cinta tanah air", "Meningkatnya konflik dan perpecahan"],
+          benar: 3
+        },
+        {
+          soal: "Sekaten merupakan salah satu tradisi yang ada di D.I.Yogyakarta untuk memperingati",
+          pilihan: ["Kelahiran nabi Muhammad", "Hari ulang tahun D.I.Yogyakarta", "Kelahiran Sri Sultan", "Hari ulang tahun Republik Indonesia"],
+          benar: 0
+        },
+        {
+          soal: "Indonesia memiliki beragam budaya, yang bukan termasuk budaya",
+          pilihan: ["Bahasa daerah", "Tarian adat", "Tradisi yang dilestarikan", "Agama"],
+          benar: 3
+        },
+        {
+          soal: "Apa yang dimaksud dengan sektor formal dalam pekerjaan?",
+          pilihan: ["Pekerjaan yang dilakukan secara mandiri", "Pekerjaan yang dilakukan oleh instansi resmi", "Pekerjaan yang tidak terdaftar secara resmi", "Pekerjaan yang tidak memiliki penghasilan tetap"],
+          benar: 1
+        },
+      ],
+      5: [
+        {
+          soal: "Contoh pekerjaan di sektor nonformal adalah",
+          pilihan: ["Pegawai bank", "Guru", "Petani", "Karyawan perusahaan"],
+          benar: 2
+        },
+        {
+          soal: "Mengapa semua pekerjaan dianggap memiliki nilai mulia?",
+          pilihan: ["Karena semua pekerjaan menghasilkan uang", "Karena semua pekerjaan memberikan manfaat dan tidak merugikan orang lain", "Karena semua pekerjaan memiliki status sosial yang tinggi", "Karena semua pekerjaan dilakukan oleh orang dewasa"],
+          benar: 1
+        },
+        {
+          soal: "Apa yang dapat disimpulkan tentang hubungan antara berbagai profesi?",
+          pilihan: ["Beberapa profesi lebih penting daripada yang lain", "Semua profesi saling melengkapi dan berkaitan", "Hanya profesi di sektor formal yang penting", "Profesi nonformal tidak memiliki nilai dalam masyarakat"],
+          benar: 1
+        },
+        {
+          soal: "Siapa yang berperan penting dalam menyediakan kebutuhan dasar bagi profesi lainnya?",
+          pilihan: ["Dokter", "Polisi", "Petani", "Guru"],
+          benar: 2
+        },
+        {
+          soal: "Apa yang menjadi ciri khas dari pekerjaan di sektor nonformal?",
+          pilihan: ["Memiliki penghasilan tetap dan teratur", "Dikelola oleh instansi pemerintah", "Memiliki kebebasan dalam mengatur pekerjaan sendiri", "Selalu membutuhkan pendidikan formal"],
+          benar: 2
+        },
+      ]
+    };
+
+    const judul = document.getElementById('judul-paket');
+    const soalTeks = document.getElementById('soal-teks');
+    const opsiContainer = document.getElementById('opsi-jawaban');
+    const nextBtn = document.getElementById('next-btn');
+
+    let indexSoal = 0;
+    let soalPaket = [];
+
+    function tampilkanSoal() {
+      nextBtn.style.display = "none";
+      opsiContainer.innerHTML = "";
+      const current = soalPaket[indexSoal];
+      soalTeks.textContent = `${indexSoal + 1}. ${current.soal}`;
+
+      current.pilihan.forEach((opsi, i) => {
+        const div = document.createElement("div");
+        div.textContent = `${String.fromCharCode(97 + i)}. ${opsi}`;
+        div.className = "option";
+        div.onclick = () => pilihJawaban(i, div, current.benar);
+        opsiContainer.appendChild(div);
+      });
+    }
+
+    function pilihJawaban(pilihanIndex, elemen, jawabanBenar) {
+  const opsiDivs = document.querySelectorAll(".option");
+  const soundCorrect = document.getElementById("sound-correct");
+  const soundWrong = document.getElementById("sound-wrong");
+
+  opsiDivs.forEach((div, i) => {
+    div.onclick = null; // Disable klik ulang
+    if (i === jawabanBenar) {
+      div.classList.add("correct");
+    }
+    if (i === pilihanIndex && i !== jawabanBenar) {
+      div.classList.add("wrong");
+    }
+  });
+
+  // Play sound
+    if (pilihanIndex === jawabanBenar) {
+    console.log("Jawaban benar - mainkan suara benar");
+    soundCorrect.play().catch(err => console.error("Gagal play benar:", err));
+  } else {
+    console.log("Jawaban salah - mainkan suara salah");
+    soundWrong.play().catch(err => console.error("Gagal play salah:", err));
+  }
+
+
+  nextBtn.style.display = "inline-block";
+}
+
+    function nextSoal() {
+      indexSoal++;
+      if (indexSoal < soalPaket.length) {
+        tampilkanSoal();
+      } else {
+        window.location.href = "selesai.html";
+      }
+    }
+
+    if (paket && semuaSoal[paket]) {
+      soalPaket = semuaSoal[paket];
+      judul.textContent = `Pertanyaan Paket ${paket}`;
+      tampilkanSoal();
+    } else {
+      judul.textContent = "Paket tidak ditemukan.";
+      soalTeks.textContent = "";
+    }
+
+    // Musik Latar
+const bgMusic = document.getElementById('bg-music');
+const toggleBtn = document.getElementById('toggle-sound');
+
+// Pastikan musik langsung dimainkan (untuk beberapa browser perlu interaksi user)
+window.addEventListener('load', () => {
+  bgMusic.play().catch(() => {
+    // Autoplay bisa ditolak browser sampai ada interaksi
+    toggleBtn.textContent = '▶️';
+  });
+});
+
+toggleBtn.addEventListener('click', () => {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    toggleBtn.textContent = '🔊';
+  } else {
+    bgMusic.pause();
+    toggleBtn.textContent = '🔇';
+  }
+});
+
+  </script>
+</body>
+</html>

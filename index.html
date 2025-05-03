@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to SEJOLI</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: url('welcome.png') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .welcome-container {
+      text-align: center;
+      padding-bottom: 140px;
+      animation: fadeSlide 1.5s ease-out forwards;
+      opacity: 0;
+      transform: translateY(50px);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .welcome-container h1 {
+      font-size: 2em;
+      color: #000000;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-masuk {
+      padding: 15px 40px;
+      font-size: 1.2em;
+      background-color: #3b9fde;
+      color: #000000;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    .btn-masuk:hover {
+      background-color: #4a90e2;
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    @keyframes fadeSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .sound-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .welcome-container h1 {
+        font-size: 8vw;
+      }
+
+      .btn-masuk {
+        font-size: 1em;
+        padding: 12px 30px;
+      }
+    }
+
+    @media (min-width: 601px) and (max-width: 1024px) {
+      .welcome-container h1 {
+        font-size: 5vw;
+      }
+
+      .btn-masuk {
+        font-size: 1.1em;
+        padding: 14px 36px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .welcome-container h1 {
+        font-size: 3.5em;
+      }
+
+      .btn-masuk {
+        font-size: 1.5em;
+        padding: 18px 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="sound-toggle" id="toggle-sound" title="Matikan Suara">🔊</button>
+
+  <div class="welcome-container">
+    <h1>WELCOME TO SEJOLI</h1>
+    <button class="btn-masuk">Mulai</button>
+  </div>
+
+  <audio id="welcome-audio" src="welcome.mp3" preload="auto"></audio>
+
+  <script>
+    const audio = document.getElementById('welcome-audio');
+    const toggleBtn = document.getElementById('toggle-sound');
+
+    // Toggle suara manual
+    toggleBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        toggleBtn.textContent = '🔊';
+        toggleBtn.title = 'Matikan Suara';
+      } else {
+        audio.pause();
+        toggleBtn.textContent = '🔇';
+        toggleBtn.title = 'Nyalakan Suara';
+      }
+    });
+
+    // Mainkan audio saat interaksi pertama
+    function enableAudioPlayback() {
+      audio.play().catch((e) => {
+        console.log("Autoplay gagal:", e);
+      });
+
+      document.removeEventListener('click', enableAudioPlayback);
+      document.removeEventListener('touchstart', enableAudioPlayback);
+    }
+
+    document.addEventListener('click', enableAudioPlayback);
+    document.addEventListener('touchstart', enableAudioPlayback);
+
+    // Tombol Mulai
+    document.querySelector('.btn-masuk').addEventListener('click', function(e) {
+      e.preventDefault();
+      audio.pause();
+      window.location.href = "home.html";
+    });
+  </script>
+</body>
+</html>

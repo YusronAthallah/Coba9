@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('16.png') no-repeat center center/cover;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .selection-container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .box-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            justify-items: center;
+        }
+
+        .box {
+            width: 200px;
+            height: 100px;
+            background-color: #007BFF;
+            color: white;
+            line-height: 80px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .box:hover {
+            background-color: #0056b3;
+        }
+
+        .box:active {
+            background-color: #003f7f;
+        }
+
+        .home-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+
+        .sound-toggle {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.selection-container {
+    /* Tambahkan ini */
+    animation: fadeInUp 0.8s ease-out;
+}
+
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .selection-container {
+                padding: 15px;
+            }
+
+            .box {
+                width: 90px;
+                height: 80px;
+                font-size: 1.2rem;
+            }
+
+            .box-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sound-toggle {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="selection-container">
+        <button class="sound-toggle" onclick="toggleSound()">🔊</button>
+
+        <h1>Pilih Studi Kasus</h1>
+        <div class="box-container">
+            <div class="box" onclick="goToPage(1)">1</div>
+            <div class="box" onclick="goToPage(2)">2</div>
+            <div class="box" onclick="goToPage(3)">3</div>
+            <div class="box" onclick="goToPage(4)">4</div>
+            <div class="box" onclick="goToPage(5)">5</div>
+            <div class="box" onclick="goToPage(6)">6</div>
+        </div>
+        <button class="home-button" onclick="goHome()">Kembali ke Beranda</button>
+    </div>
+
+    <audio id="bg-audio" autoplay loop>
+        <source src="studikasus1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const audio = document.getElementById("bg-audio");
+        const soundButton = document.querySelector(".sound-toggle");
+
+        function toggleSound() {
+            if (audio.paused) {
+                audio.play();
+                soundButton.textContent = "🔊";
+            } else {
+                audio.pause();
+                soundButton.textContent = "🔇";
+            }
+        }
+
+        function goToPage(number) {
+            const url = `studikasus${number}.html`;
+            window.location.href = url;
+        }
+
+        function goHome() {
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+</html>
